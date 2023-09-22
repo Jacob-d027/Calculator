@@ -9,13 +9,12 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet var availableButtons: [UIButton]!
     @IBOutlet weak var resultingNumber: UILabel!
-    @IBOutlet var operationButtons: [UIButton]!
     
-    var expression: String = ""
-    var secondNumber: String = ""
-    
+    var firstNumber: Double = 0
+    var secondNumber: Double = 0
+    var typingNumber: Bool = false
+    var operation: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,40 +23,64 @@ class ViewController: UIViewController {
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
-        print("\(sender.titleLabel!.text!) was pressed")
-        checkWhichButton(sender)
-//        print(sender.tag)
-//        print(sender.titleLabel!.text!)
+        if let digitpressed = sender.titleLabel!.text {
+            // the button pressed will be the sender, so get the label title to
+            if typingNumber {
+                // if typingNumber is true then just append the next button press
+                resultingNumber.text! += digitpressed
+            } else {
+                // If it is false, as it is by default, then just set the first value as the button press and set typingNumber to true to run above code.
+                resultingNumber.text! = digitpressed
+                
+                typingNumber = true
+            }
+        }
+        
     }
     
-    func checkWhichButton(_ sender: UIButton) {
-        let buttonName = sender.titleLabel!.text!
-        
-        switch buttonName {
-        case "1":
-            resultingNumber.text! += buttonName
-        case "2":
-            resultingNumber.text! += buttonName
-        case "3":
-            resultingNumber.text! += buttonName
-        case "4":
-            resultingNumber.text! += buttonName
-        case "5":
-            resultingNumber.text! += buttonName
-        case "6":
-            resultingNumber.text! += buttonName
-        case "7":
-            resultingNumber.text! += buttonName
-        case "8":
-            resultingNumber.text! += buttonName
-        default:
-            break
+    
+    @IBAction func operationButtonPressed(_ sender: UIButton) {
+        if typingNumber {
+            //when true take the value of the string and store it as a value
+            if let number = Double(resultingNumber.text!) {
+                firstNumber = number
+                operation = sender.titleLabel!.text!
+                typingNumber = false
+                //set typingNumber to false to initiate the typing of second number
+            }
         }
     }
     
-    func updateNumber() {
+    
+    @IBAction func equalsButtonsPressed(_ sender: UIButton) {
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    func updateNumber(buttonTitle: String) {
+//        var buttonName = buttonTitle
+//        if resultingNumber.text! == "0" {
+//            resultingNumber.text! = buttonName
+//        } else {
+//            resultingNumber.text! += buttonName
+//        }
+//    }
     
 }
 
