@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         
     }
 
+    
     @IBAction func buttonTapped(_ sender: UIButton) {
         if let digitpressed = sender.titleLabel!.text {
             // the button pressed will be the sender, so get the label title to
@@ -45,6 +46,7 @@ class ViewController: UIViewController {
             if let number = Double(resultingNumber.text!) {
                 firstNumber = number
                 operation = sender.titleLabel!.text!
+                resultingNumber.text! += " \(operation)"
                 typingNumber = false
                 //set typingNumber to false to initiate the typing of second number
             }
@@ -53,34 +55,44 @@ class ViewController: UIViewController {
     
     
     @IBAction func equalsButtonsPressed(_ sender: UIButton) {
-        
+        //after typing first and second numbers and of course choosing an operation, we will return the total of the typed expression.
+        if typingNumber {
+            if let number = Double(resultingNumber.text!) {
+                secondNumber = number
+                solveExpression()
+            }
+        }
     }
     
     
+    func solveExpression() {
+        // checks what operation button was pressed, then performs said operation and returns result
+        switch operation {
+        case "+":
+            resultingNumber.text = "\(firstNumber + secondNumber)"
+        case "-":
+            resultingNumber.text = "\(firstNumber - secondNumber)"
+        case "x":
+            resultingNumber.text = "\(firstNumber * secondNumber)"
+        case "/":
+            if secondNumber != 0 {
+                resultingNumber.text = "\(firstNumber / secondNumber)"
+            } else {
+                resultingNumber.text = "Error"
+            }
+        default:
+            return
+        }
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    func updateNumber(buttonTitle: String) {
-//        var buttonName = buttonTitle
-//        if resultingNumber.text! == "0" {
-//            resultingNumber.text! = buttonName
-//        } else {
-//            resultingNumber.text! += buttonName
-//        }
-//    }
+    @IBAction func clearButtonPressed(_ sender: UIButton) {
+        //resets all values to back to default values
+        resultingNumber.text = "0"
+        firstNumber = 0
+        secondNumber = 0
+        typingNumber = false
+        operation = ""
+    }
     
 }
 
